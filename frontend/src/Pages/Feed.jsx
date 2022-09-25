@@ -89,7 +89,7 @@ const Feed = () => {
       if (res.payload.success) {
         toast({
           title: "Post created!",
-          description: res.payload.message,
+          description: res.payload?.message,
           status: "success",
           duration: 3000,
           isClosable: true,
@@ -125,7 +125,7 @@ const Feed = () => {
       if (res.payload.success) {
         toast({
           title: "Success",
-          description: res.payload.message,
+          description: res.payload?.message,
           status: "success",
           duration: 3000,
           isClosable: true,
@@ -151,7 +151,7 @@ const Feed = () => {
       if (res.payload.success) {
         toast({
           title: "Post deleted!",
-          description: res.payload.message,
+          description: res.payload?.message,
           status: "success",
           duration: 3000,
           isClosable: true,
@@ -173,7 +173,26 @@ const Feed = () => {
     });
   };
   const getMyFeeds = () => {
-    dispatch(getPosts(userId, token));
+    dispatch(getPosts(userId, token)).then((res) => {
+      if (res.payload.success===true) {
+        toast({
+          title:"Success",
+          description:res.payload?.message+" Reload the browser",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        })}
+        else{
+        toast({
+          title:"Error",
+          description:"Something went wrong",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        })
+        
+      }
+    });
   };
   const logout = () => {
     localStorage.removeItem("token");
@@ -193,7 +212,7 @@ const Feed = () => {
           </Flex>
         ) : error ? (
           <Flex justifyContent="center" direction="column" alignItems="center">
-            <Heading textAlign={"center"}>{err.message}</Heading>
+            <Heading textAlign={"center"}>{err?.message}</Heading>
             <Button variant="solid" colorScheme="messenger" m="1rem">
               <Link to="/login">Login</Link>
             </Button>
