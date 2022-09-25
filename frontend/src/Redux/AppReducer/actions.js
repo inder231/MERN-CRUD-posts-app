@@ -1,11 +1,10 @@
 import * as types from "./actionTypes";
 import axios from "axios";
-
 export const getPosts = (userId, token) => async (dispatch) => {
   dispatch({ type: types.USER_GET_POSTS_REQUEST });
   try {
     const res = await axios.get(
-      `http://localhost:8080/profile/${userId}/feed`,
+      `https://backend-231.herokuapp.com/profile/${userId}/feed`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -23,7 +22,7 @@ export const createPost = (userId, token, payload) => async (dispatch) => {
   dispatch({ type: types.USER_POST_REQUEST });
   try {
     const res = await axios.post(
-      `http://localhost:8080/profile/${userId}/feed`,
+      `https://backend-231.herokuapp.com/profile/${userId}/feed`,
       payload,
       {
         headers: {
@@ -42,7 +41,7 @@ export const updatePost =
     dispatch({ type: types.USER_UPDATE_POSTS_REQUEST });
     try {
       const res = await axios.patch(
-        `http://localhost:8080/profile/${userId}/feed/${postId}`,
+        `https://backend-231.herokuapp.com/profile/${userId}/feed/${postId}`,
         payload,
         {
           headers: {
@@ -63,7 +62,7 @@ export const deletePost = (userId, postId, token) => async (dispatch) => {
   dispatch({ type: types.USER_DELETE_POSTS_REQUEST });
   try {
     const res = await axios.delete(
-      `http://localhost:8080/profile/${userId}/feed/${postId}`,
+      `https://backend-231.herokuapp.com/profile/${userId}/feed/${postId}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
     return dispatch({ type: types.USER_DELETE_POSTS_SUCCESS, payload: res.data });

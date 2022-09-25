@@ -58,7 +58,7 @@ const Feed = () => {
   const [updated, setUpdated] = useState({});
   const [updatPostId, setUpdatePostId] = useState("");
   const [buttonState, setButtonState] = useState(false);
-  const [postid,setPostid] = useState("");
+  const [postid, setPostid] = useState("");
   const inputFile = useRef();
   const inputUpdatedFile = useRef();
   const toast = useToast();
@@ -274,11 +274,10 @@ const Feed = () => {
                           <Button
                             variant={"ghost"}
                             colorScheme="whiteAlpha"
-                            onClick={()=>{
+                            onClick={() => {
                               setPostid(post._id);
                               onOpenDelete();
                             }}
-                          
                           >
                             {" "}
                             <DeleteIcon color="red.500" />{" "}
@@ -307,10 +306,12 @@ const Feed = () => {
               <Button ref={cancelRef} onClick={onCloseDelete}>
                 Cancel
               </Button>
-              <Button colorScheme='red' 
-              onClick={() => deleteMyPost(postid)}
-              isLoading={buttonState}
-              ml={3}>
+              <Button
+                colorScheme="red"
+                onClick={() => deleteMyPost(postid)}
+                isLoading={buttonState}
+                ml={3}
+              >
                 Delete
               </Button>
             </AlertDialogFooter>

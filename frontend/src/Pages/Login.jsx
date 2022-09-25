@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../Redux/AuthReducer/actions";
 import {
   Box,
@@ -29,6 +29,7 @@ const Login = () => {
     if (formdata.username && formdata.password) {
       setButtonState(true);
       dispatch(login(formdata)).then((res) => {
+        console.log(res);
         if (res.type === "USER_LOGIN_SUCCESS") {
           localStorage.setItem("userId", res.payload.userId);
           localStorage.setItem("token", res.payload.token);

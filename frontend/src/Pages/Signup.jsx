@@ -9,15 +9,19 @@ import {
   Input,
   Select,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { signup } from "../Redux/AuthReducer/actions";
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const toast = useToast();
   const [data, setData] = useState({});
+  const [buttonState, setButtonState] = useState(false);
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({
@@ -27,7 +31,30 @@ const Signup = () => {
   };
   const handleSignup = (e) => {
     e.preventDefault();
-    dispatch(signup(data)).then((res)=>console.log(res));
+    setButtonState(true);
+    dispatch(signup(data)).then((res) => {
+      if (res.payload.success === true) {
+        toast({
+          title: "Success",
+          description: res.payload.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+
+        setButtonState(false);
+        navigate("/login");
+      } else {
+        toast({
+          title: "Warning",
+          description: res.payload.message,
+          status: "warning",
+          duration: 3000,
+          isClosable: true,
+        });
+        setButtonState(false);
+      }
+    });
   };
   return (
     <Box height="90vh">
@@ -137,7 +164,7 @@ const Signup = () => {
               <option value="male">Male</option>
               <option value="female">Female</option>
             </Select>
-            <Button margin="5px 0px" width="100%" type="submit">
+            <Button isLoading={buttonState} margin="5px 0px" width="100%" type="submit">
               SignUp
             </Button>
           </Flex>
